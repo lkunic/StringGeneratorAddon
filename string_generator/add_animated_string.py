@@ -1,12 +1,6 @@
-﻿import numpy as np
-import bpy
+﻿import bpy
+import numpy as np
 
-def skin_mesh(context, mesh, arm):
-    mesh.select = True
-    arm.select = True
-    context.scene.objects.active = arm
-    bpy.ops.object.parent_set(type='ARMATURE_AUTO')
-                
 class AddAnimatedString(bpy.types.Operator):
     """Add an animated string"""
     bl_idname = "mesh.animated_string_add"
@@ -49,21 +43,28 @@ class AddAnimatedString(bpy.types.Operator):
 
     def execute(self, context):
         bpy.ops.mesh.string_add(
-            vertex_count = self.vertex_count, 
-            gauge = self.gauge, 
-            length = self.length, 
+            vertex_count = self.vertex_count,
+            gauge = self.gauge,
+            length = self.length,
             segment_count = self.segment_count,
             fret_count = self.fret_count)
         mesh = bpy.context.object
 
         bpy.ops.mesh.string_armature_add(
-            length=self.length, 
-            segment_count=self.segment_count)
-        arm = bpy.context.object
+            length = self.length,
+            segment_count = self.segment_count)
+        armature = bpy.context.object
 
-        skin_mesh(context, mesh, arm)
+        SkinMesh(context, mesh, armature)
 
-        return {'FINISHED'} 
+        return {'FINISHED'}
 
     def invoke(self, context, event):
         return self.execute(context)
+
+# Attaches the given mesh to the given armature using vertex groups
+def SkinMesh(context, mesh, armature):
+    mesh.select = True
+    armature.select = True
+    context.scene.objects.active = armature
+    bpy.ops.object.parent_set(type='ARMATURE_AUTO')

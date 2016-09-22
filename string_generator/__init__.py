@@ -4,13 +4,14 @@ bl_info = {
     "name" : "String Generator",
     "author" : "LKunic (lkunic@outlook.com)",
     "version" : (1,0,0),
-    "blender" : (2,6,7),
+    "blender" : (2,7,7),
     "location" : "View3D > Add > Mesh",
     "description" : "Generates animated strings for musical instrument models",
     "warning" : "",
     "wiki_url" : "",
     "tracker_url" : "",
-    "category" : "Add Mesh"}
+    "category" : "Add Mesh"
+}
 
 if "bpy" in locals():
     import importlib
@@ -24,6 +25,7 @@ else:
 
 import bpy
 
+# The entry for the 'Add mesh' menu
 class INFO_MT_string_generator(bpy.types.Menu):
     bl_idname = "INFO_MT_mesh_string_generator"
     bl_label = "String Generator"
@@ -31,12 +33,9 @@ class INFO_MT_string_generator(bpy.types.Menu):
     def draw(self, context):
         layout = self.layout
         layout.operator_context = 'INVOKE_REGION_WIN'
-        layout.operator(add_mesh_string.AddString.bl_idname, 
-                        text=add_mesh_string.AddString.bl_label, 
+        layout.operator(add_mesh_string.AddString.bl_idname,
+                        text=add_mesh_string.AddString.bl_label,
                         icon="OUTLINER_DATA_CURVE")
-        layout.operator(add_mesh_string_armature.AddStringArmature.bl_idname, 
-                        text=add_mesh_string_armature.AddStringArmature.bl_label, 
-                        icon="BONE_DATA")
         layout.operator(add_animated_string.AddAnimatedString.bl_idname,
                         text=add_animated_string.AddAnimatedString.bl_label,
                         icon="OUTLINER_OB_CURVE")
